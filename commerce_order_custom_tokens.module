@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Implements hook_token_info().
+*/
+function commerce_order_custom_tokens_token_info() {
+
+    $order = array();
+
+    $order['base-price'] = array(
+        'name' => t('Order total:Base price'),
+        'description' => t('The sub-total excluding shipping tax end other fees and charges.'),
+    );
+
+    return array(
+        'tokens' => array('commerce-order' => $order),
+    );
+}
+
+/**
+ * Implements hook_tokens().
+*/
+function commerce_order_custom_tokens_tokens($type, $tokens, array $data = array(), array $options = array()) {
+
+    $replacements = array();
+
+    if ($type == 'commerce-order' && !empty($data['commerce-order'])) {
+    $order = $data['commerce-order'];
+
+        foreach ($tokens as $name => $original) {
+            switch ($name) {
+
+                case 'base-price':
+                    $price_components = commerce_price_component_load($order->commerce_order_total['und']['0'], 'base_price');
+                    $replacements[$original] = number_format($price_components['0']['price']['amount']/100, 2, ',', ' ')." руб.";
+                    break;
+
+            }
+        }
+    }
+
+    return $replacements;
+}
+
+?>

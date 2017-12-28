@@ -1,0 +1,6 @@
+name = Commerce Order Custom Tokens
+description = New price tokens for Drupal Commerce
+package = Commerce
+core = 7.x
+dependencies[] = token
+files[] = commerce_order_custom_tokens.module
