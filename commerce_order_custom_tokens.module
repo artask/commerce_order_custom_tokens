@@ -32,7 +32,7 @@ function commerce_order_custom_tokens_tokens($type, $tokens, array $data = array
 
                 case 'base-price':
                     $price_components = commerce_price_component_load($order->commerce_order_total['und']['0'], 'base_price');
-                    $replacements[$original] = number_format($price_components['0']['price']['amount']/100, 2, ',', ' ')." руб.";
+                    $replacements[$original] = number_format($price_components['0']['price']['amount']/100, 0, ',', ' ')." руб.";
                     break;
 
             }
